@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  Casca-Grossa-psql:
+    image: bitnami/postgresql:latest
+    ports:
+      - 127.0.0.1:5447:5432
+    volumes:
+      - ./psqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRESQL_PASSWORD=123456
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_DATABASE=cascagrossa 
