@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CriarUsuario {
+  name                 String
+  email                String @unique
+  password             String
+  passwordConfirmation String
+}
+
+model MarcandoPedal {
+  ride_id                 Int      @id @default(autoincrement())
+  name                    String
+  start_date              DateTime
+  start_date_registration DateTime
+  end_date_registration   DateTime
+  additional_information  String?
+  start_place             String
+  participants_limit      Int?
+}
+
+model InscreverNoPedal {
+  ride_id           Int      @id @default(autoincrement())
+  user_id           Int
+  subscription_date DateTime
+}
