@@ -10,15 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CriarUsuario {
+model User {
+  id                   Int           @id @default(autoincrement())
   name                 String
-  email                String @unique
+  email                String        @unique
   password             String
   passwordConfirmation String
+  appointments         Appointment[]
+  created_rides        Ride[]
 }
 
-model MarcandoPedal {
-  ride_id                 Int      @id @default(autoincrement())
+model Ride {
+  id                      Int           @id @default(autoincrement())
   name                    String
   start_date              DateTime
   start_date_registration DateTime
@@ -26,10 +29,18 @@ model MarcandoPedal {
   additional_information  String?
   start_place             String
   participants_limit      Int?
+  created_user_id         Int
+  appointments            Appointment[]
+  creator_user            User          @relation(fields: [created_user_id], references: [id])
 }
 
-model InscreverNoPedal {
-  ride_id           Int      @id @default(autoincrement())
+model Appointment {
+  ride_id           Int
   user_id           Int
   subscription_date DateTime
+
+  ride Ride @relation(fields: [ride_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+
+  @@id([ride_id, user_id])
 }

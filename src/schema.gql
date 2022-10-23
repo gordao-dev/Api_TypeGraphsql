@@ -17,6 +17,7 @@ type Appointment {
 input CreateAppointmentInput {
   additional_information: String!
   end_date_registration: DateTime!
+  endsAt: DateTime!
   name: String!
   participants_limit: Float!
   start_date: DateTime!

@@ -22,5 +22,7 @@ export class CreateAppointmentInput {
 
   @Field()
   participants_limit: Number;
+
+  @Field()
   endsAt: Date;
 }

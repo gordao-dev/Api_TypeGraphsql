@@ -1,4 +1,3 @@
-import { ApolloError } from "apollo-server";
 import {
   Arg,
   FieldResolver,
