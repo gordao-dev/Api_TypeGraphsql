@@ -1,14 +1,16 @@
 import { container } from "tsyringe";
-import ICreateUserRepository from "../../Repositories/ICreateUserRepository";
+import IUsersRepository from "../../Repositories/ICreateUserRepository";
 import UsersRepository from "../../Repositories/UsersRepository";
-
 class UsersInjections {
-  public register(): void {
-    container.registerSingleton<ICreateUserRepository>(
+  static register() {
+    throw new Error("Method not implemented.");
+  }
+  public register = () => {
+    container.registerSingleton<IUsersRepository>(
       "UsersRepository",
       UsersRepository
     );
-  }
+  };
 }
 
 export default UsersInjections;

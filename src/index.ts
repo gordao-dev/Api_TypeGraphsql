@@ -15,6 +15,22 @@ prisma.user
     console.log("cadastrou");
   });
 
+prisma.ride
+  .create({
+    data: {
+      name: "gu",
+      end_date_registration: "00-00-0000 00:00:00",
+      start_date: "00-00-0000 00:00:00",
+      start_date_registration: "00-00-0000 00:00:00",
+      start_place: "casa",
+      additional_information: "da",
+      participants_limit: 1000,
+    },
+  })
+  .then(() => {
+    console.log("Pedal marcado");
+  });
+
 async function main() {
   const allUsers = await prisma.user.findMany();
 

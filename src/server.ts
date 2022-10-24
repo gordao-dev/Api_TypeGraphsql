@@ -5,13 +5,15 @@ import path from "node:path";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { AppontmentsResolver } from "./resolvers/appointments-resolver";
-import { container } from "tsyringe";
-import ICreateUserRepository from "./Modules/Users/Repositories/ICreateUserRepository";
-import UsersRepository from "./Modules/Users/Repositories/UsersRepository";
+import UsersInjections from "./Modules/Users/infra/Injections/UserInjections";
+import UsersResolver from "./resolvers/users-resolvers";
 
 async function bootstrap() {
+  const usersInjections = new UsersInjections();
+  usersInjections.register();
+
   const schema = await buildSchema({
-    resolvers: [AppontmentsResolver],
+    resolvers: [AppontmentsResolver, UsersResolver],
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
   });
 
@@ -23,16 +25,5 @@ async function bootstrap() {
 
   console.log(`HTTP server running on ${url}`);
 }
-
-class UsersInjections {
-  public register = () => {
-    container.registerSingleton<ICreateUserRepository>(
-      "UsersRepository",
-      UsersRepository
-    );
-  };
-}
-
-export default UsersInjections;
 
 bootstrap();

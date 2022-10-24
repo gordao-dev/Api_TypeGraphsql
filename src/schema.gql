@@ -25,6 +25,13 @@ input CreateAppointmentInput {
   start_place: String!
 }
 
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+  passwordConfirmation: String!
+}
+
 type Customer {
   name: String!
 }
@@ -36,8 +43,24 @@ scalar DateTime
 
 type Mutation {
   CreateAppointment(data: CreateAppointmentInput!): Appointment!
+  create_user(data: CreateUserInput!): User!
 }
 
 type Query {
   appointements: Appointment!
+  show_user(data: ShowUserInput!): User!
+}
+
+input ShowUserInput {
+  email: String
+  id: Float
+  name: String
+}
+
+type User {
+  appointments: [Appointment!]
+  email: String!
+  id: Float!
+  name: String!
+  password: String!
 }

@@ -14,5 +14,3 @@ export class CreateUserInput {
   @Field()
   passwordConfirmation: String;
 }
-
-export default CreateUserInput;
