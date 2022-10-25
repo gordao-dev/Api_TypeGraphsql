@@ -1,17 +1,18 @@
-import { PrismaClient } from "@prisma/client";
-import CreateUserInput from "../DTOs/inputs/CreateUserInput";
-import ShowUserInput from "../DTOs/inputs/ShowUserrInput";
-import User from "../DTOs/models/UserModels";
-import ICreateUserRepository from "./ICreateUserRepository";
+import { PrismaClient } from '@prisma/client';
 
-class UsersRepository implements ICreateUserRepository {
+import IUsersRepository from './IUsersRepository';
+import User from '../Models/User';
+import ICreateUser from '../Interfaces/ICreateUser';
+import IFilterUser from '../Interfaces/IFIlterUser';
+
+class UsersRepository implements IUsersRepository {
   private prisma: PrismaClient;
 
   constructor() {
     this.prisma = new PrismaClient();
   }
 
-  public create = async (data: CreateUserInput): Promise<User> => {
+  public create = async (data: ICreateUser): Promise<User> => {
     const user = await this.prisma.user.create({
       data,
     });
@@ -19,7 +20,7 @@ class UsersRepository implements ICreateUserRepository {
     return user;
   };
 
-  public findOne = async (filter: ShowUserInput): Promise<User | null> => {
+  public findOne = async (filter: IFilterUser): Promise<User | null> => {
     const user = await this.prisma.user.findFirst({
       where: filter,
     });
@@ -29,6 +30,15 @@ class UsersRepository implements ICreateUserRepository {
     }
 
     return user;
+  };
+
+  public update = async (user: User): Promise<void> => {
+    await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: user,
+    });
   };
 }
 
