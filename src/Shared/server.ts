@@ -10,6 +10,8 @@ import UsersInjections from '../Modules/Users/Injections/UsersInjections';
 import CypherInjections from './CypherProvider/CypherInjections';
 import AuthInjections from './AuthProvider/AuthInjections';
 import RidesInjections from '../Modules/Rides/Injections/RidesInjections';
+import RidesResolver from '../Modules/Rides/Resolvers/RidesResolver';
+import AppointmentsResolver from '../Modules/Rides/Resolvers/AppointmentsResolver';
 
 async function bootstrap(): Promise<void> {
   const authInjections = new AuthInjections();
@@ -25,7 +27,7 @@ async function bootstrap(): Promise<void> {
   ridesInjections.register();
 
   const schema = await buildSchema({
-    resolvers: [UsersResolver],
+    resolvers: [UsersResolver, RidesResolver, AppointmentsResolver],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
   });
 

@@ -11,17 +11,31 @@ type Appointment {
   user_id: Float!
 }
 
+input CreateRideInput {
+  additional_information: String
+  end_date_registration: DateTime!
+  name: String!
+  participants_limit: Float
+  start_date: DateTime!
+  start_date_registration: DateTime!
+  start_place: String!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
 
 type Mutation {
+  create_ride(data: CreateRideInput!, token: String!): Ride!
+  subscribe_to_ride(data: SubscribeToRideInput!, token: String!): Appointment!
   user_sign_in(data: UserSignInInput!): User!
   user_sign_up(data: UserSignUpInput!): User!
 }
 
 type Query {
+  index_available_rides(token: String!): [Ride!]!
+  index_subscribed_rides(token: String!): [Ride!]!
   me(token: String!): User!
 }
 
@@ -37,6 +51,10 @@ type Ride {
   start_date: DateTime!
   start_date_registration: DateTime!
   start_place: String!
+}
+
+input SubscribeToRideInput {
+  ride_id: Float!
 }
 
 type User {
