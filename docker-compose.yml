@@ -10,4 +10,4 @@ services:
     environment:
       - POSTGRESQL_PASSWORD=123456
       - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_DATABASE=cascagrossa 
+      - POSTGRESQL_DATABASE=cascagrossa
