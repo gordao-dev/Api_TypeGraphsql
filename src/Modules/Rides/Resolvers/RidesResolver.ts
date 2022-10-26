@@ -14,12 +14,12 @@ export class RidesResolver {
   public async create_ride(
     @Arg('data') data: CreateRideInput,
     @Arg('token') token: string,
-  ): Promise<{ ride: Ride }> {
+  ): Promise<Ride> {
     const checkAuth = container.resolve(CheckAuth);
     const actor = await checkAuth.execute(token);
 
     const createRideService = container.resolve(CreateRideService);
-    const ride = await createRideService.execute({
+    const { ride } = await createRideService.execute({
       actor,
       data,
     });

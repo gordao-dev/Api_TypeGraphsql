@@ -23,6 +23,9 @@ class RidesRepository implements IRidesRepository {
   public findOne = async (filter: IFilterRide): Promise<Ride | null> => {
     const ride = await this.prisma.ride.findFirst({
       where: filter,
+      include: {
+        appointments: true,
+      },
     });
 
     if (!ride) {
@@ -32,9 +35,21 @@ class RidesRepository implements IRidesRepository {
     return ride;
   };
 
-  public find = async (filter: IFilterRide): Promise<Ride[]> => {
+  public find = async ({
+    appointments,
+    ...rest
+  }: IFilterRide): Promise<Ride[]> => {
     const rides = await this.prisma.ride.findMany({
-      where: filter,
+      where: appointments
+        ? {
+            ...rest,
+            appointments: {
+              every: {
+                ...appointments,
+              },
+            },
+          }
+        : rest,
     });
 
     return rides;
